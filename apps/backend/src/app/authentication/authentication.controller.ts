@@ -11,6 +11,7 @@ import {
   RegisterAuthenticationResponseDto,
 } from './dto/register-authentication.dto';
 import { UserService } from '../user/user.service';
+import { hashPassword } from '../../utils/hash';
 
 @Controller('authentication')
 export class AuthenticationController {
@@ -32,7 +33,12 @@ export class AuthenticationController {
       );
     }
 
-    const user = await this.authenticationService.register(registerAuthDto);
+    const hashedPassword = await hashPassword(registerAuthDto.password);
+
+    const user = await this.authenticationService.register({
+      ...registerAuthDto,
+      password: hashedPassword,
+    });
 
     const formattedData = new RegisterAuthenticationResponseDto(user);
 
