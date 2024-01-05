@@ -8,6 +8,12 @@ import { RegisterAuthenticationDto } from './dto/register-authentication.dto';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Types } from 'mongoose';
 
+jest.mock('../../utils/hash.ts', () => ({
+  hashPassword: jest
+    .fn()
+    .mockImplementation(async (password) => `hashed_${password}`),
+}));
+
 describe('AuthenticationController', () => {
   let controller: AuthenticationController;
   let userService: UserService;
@@ -83,6 +89,11 @@ describe('AuthenticationController', () => {
     });
 
     expect(authenticationService.register).toHaveBeenCalled();
+    expect(userService.doesThisEmailExist).toHaveBeenCalledWith(mockBody.email);
+    expect(authenticationService.register).toHaveBeenCalledWith({
+      ...mockBody,
+      password: `hashed_${mockBody.password}`,
+    });
 
     // @ts-ignore
     expect(registrationProcess.password).toBeUndefined();
