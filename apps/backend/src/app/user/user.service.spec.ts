@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from '../../schemas/user.schema';
+import { User, UserDocument } from '../../schemas/user.schema';
 
 describe('UserService', () => {
   let service: UserService;
@@ -51,5 +51,21 @@ describe('UserService', () => {
     const userExists = await service.doesThisEmailExist('rudolph@mail.com');
 
     expect(userExists).toBe(false);
+  });
+
+  it('should return user based on email', async () => {
+    const mockUser = {} as UserDocument;
+
+    mockUser.name = 'rudolph';
+    mockUser.email = 'rudolph@mail.com';
+    mockUser.password = 'hashed_password';
+
+    jest.spyOn(userModel, 'findOne').mockReturnValue({
+      exec: jest.fn().mockResolvedValueOnce(mockUser),
+    } as any);
+
+    const user = await service.findByEmail('rudolph@mail.com');
+
+    expect(user).toBe(mockUser);
   });
 });
