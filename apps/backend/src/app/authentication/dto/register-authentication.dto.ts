@@ -1,16 +1,19 @@
 import { OmitType } from '@nestjs/mapped-types';
 import { UserDocument } from 'apps/backend/src/schemas/user.schema';
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class RegisterAuthenticationDto {
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   password: string;
 }
 
