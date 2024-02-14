@@ -49,8 +49,7 @@ describe('AuthenticationService', () => {
       createdAt: now,
     };
 
-    // @ts-ignore
-    userModel.create.mockResolvedValue(mockCreatedUser);
+    (userModel.create as jest.Mock).mockResolvedValue(mockCreatedUser);
 
     const newUser = await service.register(mockRegisterDto);
 
