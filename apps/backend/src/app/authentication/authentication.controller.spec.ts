@@ -112,8 +112,7 @@ describe('AuthenticationController', () => {
         password: `hashed_${mockBody.password}`,
       });
 
-      // @ts-ignore
-      expect(registrationProcess.password).toBeUndefined();
+      expect(registrationProcess).not.toHaveProperty('password');
     });
   });
 
