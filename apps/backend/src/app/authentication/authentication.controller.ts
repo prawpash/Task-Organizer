@@ -14,7 +14,7 @@ import { UserService } from '../user/user.service';
 import { hashPassword, verifyPassword } from '../../utils/hash';
 import { LoginAuthenticationDto } from './dto/login-authentication.dto';
 import { JwtService } from '@nestjs/jwt';
-import { IJwtPayload } from './authentication.strategy';
+import { IJwtPayload } from './jwt-payload.interface';
 
 @Controller('authentication')
 export class AuthenticationController {
