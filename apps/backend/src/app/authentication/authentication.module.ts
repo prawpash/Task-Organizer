@@ -4,11 +4,14 @@ import { AuthenticationController } from './authentication.controller';
 import { SchemasModule } from '../../schemas/schemas.module';
 import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { AuthenticationStrategy } from './authentication.strategy';
 
 @Module({
   imports: [
     SchemasModule,
     UserModule,
+    PassportModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
@@ -18,6 +21,6 @@ import { JwtModule } from '@nestjs/jwt';
     }),
   ],
   controllers: [AuthenticationController],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, AuthenticationStrategy],
 })
 export class AuthenticationModule {}
