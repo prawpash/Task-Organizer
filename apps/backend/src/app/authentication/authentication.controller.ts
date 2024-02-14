@@ -14,6 +14,7 @@ import { UserService } from '../user/user.service';
 import { hashPassword, verifyPassword } from '../../utils/hash';
 import { LoginAuthenticationDto } from './dto/login-authentication.dto';
 import { JwtService } from '@nestjs/jwt';
+import { IJwtPayload } from './authentication.strategy';
 
 @Controller('authentication')
 export class AuthenticationController {
@@ -71,7 +72,7 @@ export class AuthenticationController {
       );
     }
 
-    const payload = { sub: user._id, name: user.name };
+    const payload: IJwtPayload = { sub: user._id, name: user.name };
 
     const accessToken = await this.jwtService.signAsync(payload);
 
