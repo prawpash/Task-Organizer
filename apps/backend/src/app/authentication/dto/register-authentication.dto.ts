@@ -1,5 +1,5 @@
 import { OmitType } from '@nestjs/mapped-types';
-import { UserDocument } from 'apps/backend/src/schemas/user.schema';
+import { UserDocument } from '../../../schemas/user.schema';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
