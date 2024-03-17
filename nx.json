@@ -15,7 +15,7 @@
       }
     },
     "lint": {
-      "cache": true,
+      "cache": false,
       "inputs": [
         "default",
         "{workspaceRoot}/.eslintrc.json",
@@ -24,7 +24,7 @@
       ]
     },
     "@nx/vite:test": {
-      "cache": true,
+      "cache": false,
       "inputs": ["default", "^default"]
     }
   },

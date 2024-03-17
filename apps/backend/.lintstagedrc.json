@@ -1,0 +1,7 @@
+{
+  "*.ts": [
+    "nx format:write --files",
+    "nx affected -t lint --fix --skipNxCache --files",
+    "nx affected -t test --nxBail --skipNxCache --files"
+  ]
+}
