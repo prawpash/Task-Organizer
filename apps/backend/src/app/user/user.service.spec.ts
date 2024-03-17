@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Query } from 'mongoose';
 import { User, UserDocument } from '../../schemas/user.schema';
 
 describe('UserService', () => {
@@ -36,7 +36,7 @@ describe('UserService', () => {
   it('should return true when email exist', async () => {
     jest.spyOn(userModel, 'findOne').mockReturnValue({
       exec: jest.fn().mockResolvedValueOnce({ _id: 'lkjasdj' }),
-    } as any);
+    } as unknown as Query<unknown, unknown, object, User, 'findOne'>);
 
     const userExists = await service.doesThisEmailExist('rudolph@mail.com');
 
@@ -46,7 +46,7 @@ describe('UserService', () => {
   it('should return false when email exist', async () => {
     jest.spyOn(userModel, 'findOne').mockReturnValue({
       exec: jest.fn().mockResolvedValueOnce(null),
-    } as any);
+    } as unknown as Query<unknown, unknown, object, User, 'findOne'>);
 
     const userExists = await service.doesThisEmailExist('rudolph@mail.com');
 
@@ -62,7 +62,7 @@ describe('UserService', () => {
 
     jest.spyOn(userModel, 'findOne').mockReturnValue({
       exec: jest.fn().mockResolvedValueOnce(mockUser),
-    } as any);
+    } as unknown as Query<unknown, unknown, object, User, 'findOne'>);
 
     const user = await service.findByEmail('rudolph@mail.com');
 

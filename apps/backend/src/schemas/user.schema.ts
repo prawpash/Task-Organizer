@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Workspace } from './workspace.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
   @Prop({ required: true })
   name: string;
@@ -16,8 +17,9 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ default: Date.now() })
-  createdAt: Date;
+  // relations
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Workspace' }])
+  workspaces: Workspace[];
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
